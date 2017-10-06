@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.Dashboard">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="This is the dashboard" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dashboard_linechart"
+        android:layout_above="@+id/addRec_button_add"
+        android:layout_margin="@dimen/activity_horizontal_margin"/>
+
+    <Button
+        android:id="@+id/addRec_button_add"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:background="@android:color/holo_green_light"
+        android:text="Add Record"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"
+        android:drawableLeft="@drawable/ic_add"
+        />
+
+
+</RelativeLayout>

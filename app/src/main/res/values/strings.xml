@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Blood Pressure Monitor</string>
+    <string name="navi_dashboard">Dashboard</string>
+    <string name="navi_add">Add</string>
+    <string name="navi_challenge">Challenge</string>
+    <string name="navi_msg">msg</string>
+    <string name="navi_record">Record</string>
+    <string name="facebook_app_id">121362621903131</string>
+
+    <string name="new_pulse">PULSE</string>
+    <string name="new_sys">SYS</string>
+    <string name="new_dia">DIA</string>
+    <string name="new_arm">ARM</string>
+    <string name="new_pos">POS</string>
+    <string name="new_mood">MOOD</string>
+    <string name="new_time">TIME</string>
+    <string name="new_time_sep">:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

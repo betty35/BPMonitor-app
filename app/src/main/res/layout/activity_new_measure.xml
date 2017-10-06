@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.newMeasure">
+
+    <Button
+        android:id="@+id/new_measure_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:text="Save" />
+
+    <LinearLayout
+        android:id="@+id/line_sys"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/sys_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/new_measure_start_margin"
+            android:layout_marginTop="@dimen/new_measure_start_margin"
+            android:text="@string/new_sys"
+            android:textSize="18sp" />
+        <EditText
+            android:id="@+id/sys_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:maxLength="3"
+            android:layout_marginTop="@dimen/new_measure_start_margin"
+            android:layout_marginStart="@dimen/label_text" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/line_dia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line_sys">
+        <TextView
+            android:id="@+id/dia_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/new_measure_start_margin"
+            android:text="@string/new_dia"
+            android:textSize="18sp" />
+        <EditText
+            android:id="@+id/dia_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:maxLength="3"
+            android:layout_marginStart="@dimen/label_text" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/line_pulse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line_dia">
+        <TextView
+            android:id="@+id/pulse_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/new_measure_start_margin"
+            android:text="@string/new_pulse"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/pulse_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/label_text"
+            android:ems="10"
+            android:inputType="number"
+            android:maxLength="2"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/line_arm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line_pulse">
+        <TextView
+            android:id="@+id/arm_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/new_measure_start_margin"
+            android:text="@string/new_arm"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/arm_spin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/select_arm"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/line_pos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line_arm">
+        <TextView
+            android:id="@+id/pos_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/new_measure_start_margin"
+            android:text="@string/new_pos"
+            android:textSize="18sp" />
+        <Spinner
+            android:id="@+id/pos_spin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/select_pos"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/line_mood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line_pos">
+        <TextView
+            android:id="@+id/mood_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/new_measure_start_margin"
+            android:text="@string/new_mood"
+            android:textSize="18sp" />
+        <Spinner
+            android:id="@+id/mood_spin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/select_mood"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/line_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line_mood">
+        <TextView
+            android:id="@+id/time_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/new_measure_start_margin"
+            android:text="@string/new_time"
+            android:textSize="18sp" />
+        <EditText
+            android:id="@+id/time_text_hour"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/label_text"
+            android:ems="10"
+            android:inputType="number"
+            android:maxLength="2"/>
+        <TextView
+            android:id="@+id/time_separate"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:text="@string/new_time_sep"
+            android:textSize="18sp" />
+        <EditText
+            android:id="@+id/time_text_minute"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:maxLength="2"/>
+    </LinearLayout>
+
+</RelativeLayout>

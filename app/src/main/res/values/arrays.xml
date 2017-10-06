@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="select_arm">
+        <item>Left</item>
+        <item>Right </item>
+    </string-array>
+    <string-array name="select_pos">
+        <item>Sit</item>
+        <item>Stand</item>
+        <item>Lie</item>
+    </string-array>
+    <string-array name="select_mood">
+        <item>So-So</item>
+        <item>Calm</item>
+        <item>Happy</item>
+        <item>Sad</item>
+        <item>Worried</item>
+        <item>Anxious</item>
+        <item>Angry</item>
+        <item>Excited</item>
+    </string-array>
+</resources>
