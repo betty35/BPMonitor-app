@@ -38,7 +38,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 1
+    schemaVersion 2
     daoPackage 'bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.db'
     targetGenDir 'src/main/java'
 }

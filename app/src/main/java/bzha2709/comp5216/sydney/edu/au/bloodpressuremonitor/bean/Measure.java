@@ -1,11 +1,11 @@
 package bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.Property;
 
 import java.util.Date;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by Bingqing ZHAO on 2017/9/25
@@ -14,23 +14,19 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class Measure
 {
-    @Id(autoincrement = true)
-       private long id;
-    @Index(unique = true)
-    private Date time;
-    private int dia;
-    private int sys;
-    private int pulse;
-    private int position;
-    private int arm;
-    private int mood;
+    @Index(unique = true) @Property private Date time;
+    @Property private short dia;
+    @Property private short sys;
+    @Property private short pulse;
+    @Property private short position;
+    @Property private short arm;
+    @Property private short mood;
 
     public Measure() {}
 
-    @Generated(hash = 1497464404)
-    public Measure(long id, Date time, int dia, int sys, int pulse, int position,
-            int arm, int mood) {
-        this.id = id;
+    @Generated(hash = 1103264673)
+    public Measure(Date time, short dia, short sys, short pulse, short position,
+            short arm, short mood) {
         this.time = time;
         this.dia = dia;
         this.sys = sys;
@@ -40,67 +36,59 @@ public class Measure
         this.mood = mood;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public int getPulse() {
-        return pulse;
-    }
-
-    public void setPulse(int pulse) {
-        this.pulse = pulse;
-    }
-
     public Date getTime() {
-        return time;
+        return this.time;
     }
 
     public void setTime(Date time) {
         this.time = time;
     }
 
-    public int getDia() {
-        return dia;
+    public short getDia() {
+        return this.dia;
     }
 
-    public void setDia(int dia) {
+    public void setDia(short dia) {
         this.dia = dia;
     }
 
-    public int getSys() {
-        return sys;
+    public short getSys() {
+        return this.sys;
     }
 
-    public void setSys(int sys) {
+    public void setSys(short sys) {
         this.sys = sys;
     }
 
-    public int getPosition() {
-        return position;
+    public short getPulse() {
+        return this.pulse;
     }
 
-    public void setPosition(int position) {
+    public void setPulse(short pulse) {
+        this.pulse = pulse;
+    }
+
+    public short getPosition() {
+        return this.position;
+    }
+
+    public void setPosition(short position) {
         this.position = position;
     }
 
-    public int getArm() {
-        return arm;
+    public short getArm() {
+        return this.arm;
     }
 
-    public void setArm(int arm) {
+    public void setArm(short arm) {
         this.arm = arm;
     }
 
-    public int getMood() {
-        return mood;
+    public short getMood() {
+        return this.mood;
     }
 
-    public void setMood(int mood) {
+    public void setMood(short mood) {
         this.mood = mood;
     }
 }

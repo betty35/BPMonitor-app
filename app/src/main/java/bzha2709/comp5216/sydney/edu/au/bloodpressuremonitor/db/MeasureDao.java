@@ -5,9 +5,9 @@ import android.database.sqlite.SQLiteStatement;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.Property;
-import org.greenrobot.greendao.internal.DaoConfig;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.DatabaseStatement;
+import org.greenrobot.greendao.internal.DaoConfig;
 
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.Measure;
 
@@ -15,7 +15,7 @@ import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.Measure;
 /** 
  * DAO for table "MEASURE".
 */
-public class MeasureDao extends AbstractDao<Measure, Long> {
+public class MeasureDao extends AbstractDao<Measure, Void> {
 
     public static final String TABLENAME = "MEASURE";
 
@@ -24,14 +24,13 @@ public class MeasureDao extends AbstractDao<Measure, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
-        public final static Property Time = new Property(1, java.util.Date.class, "time", false, "TIME");
-        public final static Property Dia = new Property(2, int.class, "dia", false, "DIA");
-        public final static Property Sys = new Property(3, int.class, "sys", false, "SYS");
-        public final static Property Pulse = new Property(4, int.class, "pulse", false, "PULSE");
-        public final static Property Position = new Property(5, int.class, "position", false, "POSITION");
-        public final static Property Arm = new Property(6, int.class, "arm", false, "ARM");
-        public final static Property Mood = new Property(7, int.class, "mood", false, "MOOD");
+        public final static Property Time = new Property(0, java.util.Date.class, "time", false, "TIME");
+        public final static Property Dia = new Property(1, short.class, "dia", false, "DIA");
+        public final static Property Sys = new Property(2, short.class, "sys", false, "SYS");
+        public final static Property Pulse = new Property(3, short.class, "pulse", false, "PULSE");
+        public final static Property Position = new Property(4, short.class, "position", false, "POSITION");
+        public final static Property Arm = new Property(5, short.class, "arm", false, "ARM");
+        public final static Property Mood = new Property(6, short.class, "mood", false, "MOOD");
     }
 
 
@@ -47,14 +46,13 @@ public class MeasureDao extends AbstractDao<Measure, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"MEASURE\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
-                "\"TIME\" INTEGER," + // 1: time
-                "\"DIA\" INTEGER NOT NULL ," + // 2: dia
-                "\"SYS\" INTEGER NOT NULL ," + // 3: sys
-                "\"PULSE\" INTEGER NOT NULL ," + // 4: pulse
-                "\"POSITION\" INTEGER NOT NULL ," + // 5: position
-                "\"ARM\" INTEGER NOT NULL ," + // 6: arm
-                "\"MOOD\" INTEGER NOT NULL );"); // 7: mood
+                "\"TIME\" INTEGER," + // 0: time
+                "\"DIA\" INTEGER NOT NULL ," + // 1: dia
+                "\"SYS\" INTEGER NOT NULL ," + // 2: sys
+                "\"PULSE\" INTEGER NOT NULL ," + // 3: pulse
+                "\"POSITION\" INTEGER NOT NULL ," + // 4: position
+                "\"ARM\" INTEGER NOT NULL ," + // 5: arm
+                "\"MOOD\" INTEGER NOT NULL );"); // 6: mood
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_MEASURE_TIME ON \"MEASURE\"" +
                 " (\"TIME\" ASC);");
@@ -69,87 +67,80 @@ public class MeasureDao extends AbstractDao<Measure, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Measure entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
  
         java.util.Date time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(2, time.getTime());
+            stmt.bindLong(1, time.getTime());
         }
-        stmt.bindLong(3, entity.getDia());
-        stmt.bindLong(4, entity.getSys());
-        stmt.bindLong(5, entity.getPulse());
-        stmt.bindLong(6, entity.getPosition());
-        stmt.bindLong(7, entity.getArm());
-        stmt.bindLong(8, entity.getMood());
+        stmt.bindLong(2, entity.getDia());
+        stmt.bindLong(3, entity.getSys());
+        stmt.bindLong(4, entity.getPulse());
+        stmt.bindLong(5, entity.getPosition());
+        stmt.bindLong(6, entity.getArm());
+        stmt.bindLong(7, entity.getMood());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, Measure entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
  
         java.util.Date time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(2, time.getTime());
+            stmt.bindLong(1, time.getTime());
         }
-        stmt.bindLong(3, entity.getDia());
-        stmt.bindLong(4, entity.getSys());
-        stmt.bindLong(5, entity.getPulse());
-        stmt.bindLong(6, entity.getPosition());
-        stmt.bindLong(7, entity.getArm());
-        stmt.bindLong(8, entity.getMood());
+        stmt.bindLong(2, entity.getDia());
+        stmt.bindLong(3, entity.getSys());
+        stmt.bindLong(4, entity.getPulse());
+        stmt.bindLong(5, entity.getPosition());
+        stmt.bindLong(6, entity.getArm());
+        stmt.bindLong(7, entity.getMood());
     }
 
     @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+    public Void readKey(Cursor cursor, int offset) {
+        return null;
     }    
 
     @Override
     public Measure readEntity(Cursor cursor, int offset) {
         Measure entity = new Measure( //
-            cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)), // time
-            cursor.getInt(offset + 2), // dia
-            cursor.getInt(offset + 3), // sys
-            cursor.getInt(offset + 4), // pulse
-            cursor.getInt(offset + 5), // position
-            cursor.getInt(offset + 6), // arm
-            cursor.getInt(offset + 7) // mood
+            cursor.isNull(offset + 0) ? null : new java.util.Date(cursor.getLong(offset + 0)), // time
+            cursor.getShort(offset + 1), // dia
+            cursor.getShort(offset + 2), // sys
+            cursor.getShort(offset + 3), // pulse
+            cursor.getShort(offset + 4), // position
+            cursor.getShort(offset + 5), // arm
+            cursor.getShort(offset + 6) // mood
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, Measure entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
-        entity.setTime(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
-        entity.setDia(cursor.getInt(offset + 2));
-        entity.setSys(cursor.getInt(offset + 3));
-        entity.setPulse(cursor.getInt(offset + 4));
-        entity.setPosition(cursor.getInt(offset + 5));
-        entity.setArm(cursor.getInt(offset + 6));
-        entity.setMood(cursor.getInt(offset + 7));
+        entity.setTime(cursor.isNull(offset + 0) ? null : new java.util.Date(cursor.getLong(offset + 0)));
+        entity.setDia(cursor.getShort(offset + 1));
+        entity.setSys(cursor.getShort(offset + 2));
+        entity.setPulse(cursor.getShort(offset + 3));
+        entity.setPosition(cursor.getShort(offset + 4));
+        entity.setArm(cursor.getShort(offset + 5));
+        entity.setMood(cursor.getShort(offset + 6));
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(Measure entity, long rowId) {
-        entity.setId(rowId);
-        return rowId;
+    protected final Void updateKeyAfterInsert(Measure entity, long rowId) {
+        // Unsupported or missing PK type
+        return null;
     }
     
     @Override
-    public Long getKey(Measure entity) {
-        if(entity != null) {
-            return entity.getId();
-        } else {
-            return null;
-        }
+    public Void getKey(Measure entity) {
+        return null;
     }
 
     @Override
     public boolean hasKey(Measure entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        // TODO
+        return false;
     }
 
     @Override
