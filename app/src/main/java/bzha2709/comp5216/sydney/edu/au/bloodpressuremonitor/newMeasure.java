@@ -14,9 +14,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.Measure;
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.db.DaoMaster;
@@ -43,7 +45,9 @@ public class newMeasure extends AppCompatActivity {
         setContentView(R.layout.activity_new_measure);
         this.setTitle("Add New Measure");
         timeOfRecord=findViewById(R.id.time_text_datetime);
-        selectedTime=new Date();
+        Calendar calendar=Calendar.getInstance();
+        calendar.set(Calendar.SECOND,0);
+        selectedTime=calendar.getTime();
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         timeOfRecord.setText(sdf.format(selectedTime));
         timeOfRecord.setOnClickListener(new View.OnClickListener() {
@@ -72,11 +76,23 @@ public class newMeasure extends AppCompatActivity {
             arm=(short)armS.getSelectedItemPosition();
             pos=(short)posS.getSelectedItemPosition();
             mood=(short)moodS.getSelectedItemPosition();
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            try {
+                selectedTime=sdf.parse(timeOfRecord.getText().toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             Measure newMeasure=new Measure(selectedTime,dia,sys,pulse,pos,arm,mood);
-            int num=mDAO.queryBuilder().where(MeasureDao.Properties.Time.eq(selectedTime)).list().size();
-            if(num==0) mDAO.insert(newMeasure);
-            else mDAO.update(newMeasure);
-            Toast.makeText(this,"Saved successfully.",Toast.LENGTH_LONG).show();
+            List<Measure> ml=mDAO.queryBuilder().where(MeasureDao.Properties.Time.eq(selectedTime)).list();
+            if(ml.size()==0)
+            {
+                mDAO.insert(newMeasure);
+                Toast.makeText(this,"Saved successfully. time:"+selectedTime.toString(),Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Toast.makeText(this,"Data Collision",Toast.LENGTH_LONG).show();
+            }
         }
         else
         {
@@ -119,7 +135,6 @@ public class newMeasure extends AppCompatActivity {
                 timePickerDialog.show();
             }
         }, year, month, day);
-        selectedTime=calendar.getTime();
         datePickerDialog.show();
     }
 

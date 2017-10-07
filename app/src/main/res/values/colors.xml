@@ -3,4 +3,7 @@
     <color name="colorPrimary">#85ecd3</color>
     <color name="colorPrimaryDark">#80cbc4</color>
     <color name="colorAccent">#1a237e</color>
+    <color name="color_sys">#00acc1</color>
+    <color name="color_dia">#80cbc4</color>
+    <color name="color_pulse">#a5d6a7</color>
 </resources>
