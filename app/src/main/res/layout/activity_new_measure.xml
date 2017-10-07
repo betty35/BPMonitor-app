@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,14 +10,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
         android:layout_marginBottom="13dp"
+        android:onClick="onSaveMeasure"
+        android:layout_margin="@dimen/new_measure_start_margin"
         android:text="Save" />
 
-    <LinearLayout
-        android:id="@+id/line_sys"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/new_measure_leave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/new_measure_start_margin"
+        android:layout_marginBottom="13dp"
+        android:onClick="onLeaveMeasure"
+        android:text="Back" />
+
+
         <TextView
             android:id="@+id/sys_l"
             android:layout_width="wrap_content"
@@ -34,143 +43,123 @@
             android:ems="10"
             android:inputType="number"
             android:maxLength="3"
-            android:layout_marginTop="@dimen/new_measure_start_margin"
-            android:layout_marginStart="@dimen/label_text" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/line_dia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/line_sys">
+            android:layout_alignBaseline="@+id/sys_l"
+            android:layout_toEndOf="@+id/sys_l" />
+
+
         <TextView
             android:id="@+id/dia_l"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/new_measure_start_margin"
             android:text="@string/new_dia"
-            android:textSize="18sp" />
-        <EditText
-            android:id="@+id/dia_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number"
-            android:maxLength="3"
-            android:layout_marginStart="@dimen/label_text" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/line_pulse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/line_dia">
-        <TextView
-            android:id="@+id/pulse_l"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/new_measure_start_margin"
-            android:text="@string/new_pulse"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_below="@+id/sys_l"
+            android:layout_alignEnd="@+id/sys_l"
+            android:layout_marginTop="@dimen/line_width"/>
 
-        <EditText
-            android:id="@+id/pulse_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/label_text"
-            android:ems="10"
-            android:inputType="number"
-            android:maxLength="2"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/line_arm"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/dia_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/line_pulse">
+        android:layout_alignBaseline="@+id/dia_l"
+        android:layout_toEndOf="@+id/dia_l"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="3" />
+
+
+    <TextView
+        android:id="@+id/pulse_l"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_pulse"
+        android:textSize="18sp"
+        android:layout_alignEnd="@+id/dia_l"
+        android:layout_below="@+id/dia_l"
+        android:layout_marginTop="@dimen/line_width"/>
+
+    <EditText
+        android:id="@+id/pulse_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/pulse_l"
+        android:layout_below="@id/dia_text"
+        android:layout_toEndOf="@id/pulse_l"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="3" />
+
         <TextView
             android:id="@+id/arm_l"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/new_measure_start_margin"
             android:text="@string/new_arm"
-            android:textSize="18sp" />
-
+            android:textSize="18sp"
+            android:layout_below="@+id/pulse_l"
+            android:layout_alignEnd="@+id/pulse_l"
+            android:layout_marginTop="@dimen/line_width" />
         <Spinner
             android:id="@+id/arm_spin"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/select_arm"
-            android:layout_weight="1" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/line_pos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/line_arm">
+            android:layout_below="@id/pulse_text"
+            android:layout_toEndOf="@id/arm_l"
+            android:layout_alignBaseline="@+id/arm_l"/>
+
         <TextView
             android:id="@+id/pos_l"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/new_measure_start_margin"
             android:text="@string/new_pos"
-            android:textSize="18sp" />
-        <Spinner
-            android:id="@+id/pos_spin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:entries="@array/select_pos"
-            android:layout_weight="1" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/line_mood"
-        android:layout_width="match_parent"
+            android:textSize="18sp"
+            android:layout_below="@+id/arm_l"
+            android:layout_alignEnd="@+id/arm_l"
+            android:layout_marginTop="@dimen/line_width"/>
+
+    <Spinner
+        android:id="@+id/pos_spin"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/line_pos">
+        android:layout_alignBaseline="@+id/pos_l"
+        android:layout_below="@+id/arm_spin"
+        android:layout_toEndOf="@+id/pos_l"
+        android:entries="@array/select_pos" />
+
         <TextView
             android:id="@+id/mood_l"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/new_measure_start_margin"
             android:text="@string/new_mood"
-            android:textSize="18sp" />
-        <Spinner
-            android:id="@+id/mood_spin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:entries="@array/select_mood"
-            android:layout_weight="1" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/line_time"
-        android:layout_width="match_parent"
+            android:textSize="18sp"
+            android:layout_below="@+id/pos_l"
+            android:layout_alignEnd="@+id/pos_l"
+            android:layout_marginTop="@dimen/line_width"/>
+
+    <Spinner
+        android:id="@+id/mood_spin"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/line_mood">
+        android:layout_alignBaseline="@+id/mood_l"
+        android:layout_below="@+id/pos_spin"
+        android:layout_toEndOf="@id/mood_l"
+        android:entries="@array/select_mood" />
+
         <TextView
             android:id="@+id/time_l"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/new_measure_start_margin"
             android:text="@string/new_time"
-            android:textSize="18sp" />
-        <EditText
-            android:id="@+id/time_text_hour"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/label_text"
-            android:ems="10"
-            android:inputType="number"
-            android:maxLength="2"/>
+            android:textSize="18sp"
+            android:layout_below="@+id/mood_l"
+            android:layout_alignEnd="@+id/mood_l"
+            android:layout_marginTop="@dimen/line_width" />
         <TextView
-            android:id="@+id/time_separate"
-            android:layout_width="10dp"
+            android:id="@+id/time_text_datetime"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_time_sep"
-            android:textSize="18sp" />
-        <EditText
-            android:id="@+id/time_text_minute"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number"
-            android:maxLength="2"/>
-    </LinearLayout>
+            android:layout_below="@id/mood_spin"
+            android:layout_toEndOf="@id/time_l"
+            android:layout_alignBaseline="@+id/time_l" />
 
 </RelativeLayout>

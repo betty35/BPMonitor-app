@@ -5,7 +5,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.Challenges;
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.Dashboard;
@@ -48,7 +47,6 @@ public class MyBottomNaviListener implements BottomNavigationView.OnNavigationIt
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Toast.makeText(m,item.getItemId(),Toast.LENGTH_LONG).show();
         changeFragment(item.getItemId());
         return true;
     }
