@@ -44,6 +44,12 @@ public class Dashboard extends Fragment {
     LineDataSet diaLDS;
     LineDataSet pulseLDS;
 
+
+    DaoMaster.DevOpenHelper helper;
+    SQLiteDatabase db;
+    DaoMaster daoMaster;
+    DaoSession daoSession;
+
     public Dashboard(){    }
 
     @Override
@@ -166,11 +172,20 @@ public class Dashboard extends Fragment {
 
     private void initGreenDao()
     {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(mCon, "bp-monitor", null);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
-        DaoSession daoSession = daoMaster.newSession();
+        helper = new DaoMaster.DevOpenHelper(mCon, "bp-monitor", null);
+        db = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
         mDAO=daoSession.getMeasureDao();
+    }
+
+    @Override public void onDestroy()
+    {
+        super.onDestroy();
+        daoSession.clear();
+        daoSession=null;
+        db.close();
+        helper.close();
     }
 
 }

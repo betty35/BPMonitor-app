@@ -20,9 +20,11 @@ public class User
     @Property private short gender;
     @Property private String area;
     @Property private String memo;
-    @Generated(hash = 2083898071)
+    @Property private String auth;
+    @Generated(hash = 1331716055)
     public User(int id, String email, String phone, String nickname,
-            int year_of_birth, short gender, String area, String memo) {
+            int year_of_birth, short gender, String area, String memo,
+            String auth) {
         this.id = id;
         this.email = email;
         this.phone = phone;
@@ -31,6 +33,7 @@ public class User
         this.gender = gender;
         this.area = area;
         this.memo = memo;
+        this.auth = auth;
     }
     @Generated(hash = 586692638)
     public User() {
@@ -83,4 +86,11 @@ public class User
     public void setMemo(String memo) {
         this.memo = memo;
     }
+    public String getAuth() {
+        return this.auth;
+    }
+    public void setAuth(String auth) {
+        this.auth = auth;
+    }
+
 }

@@ -39,6 +39,11 @@ public class newMeasure extends AppCompatActivity {
     short sys,dia,pulse,arm,pos,mood;
     MeasureDao mDAO;
 
+    DaoMaster.DevOpenHelper helper;
+    SQLiteDatabase db;
+    DaoMaster daoMaster;
+    DaoSession daoSession;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,10 +145,19 @@ public class newMeasure extends AppCompatActivity {
 
     private void initGreenDao()
     {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "bp-monitor", null);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
-        DaoSession daoSession = daoMaster.newSession();
+        helper = new DaoMaster.DevOpenHelper(this, "bp-monitor", null);
+        db = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
         mDAO=daoSession.getMeasureDao();
+    }
+
+    @Override public void onDestroy()
+    {
+        super.onDestroy();
+        daoSession.clear();
+        daoSession=null;
+        db.close();
+        helper.close();
     }
 }

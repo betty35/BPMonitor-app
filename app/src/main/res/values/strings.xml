@@ -6,6 +6,7 @@
     <string name="navi_msg">msg</string>
     <string name="navi_record">Record</string>
     <string name="facebook_app_id">121362621903131</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">78efa94f8f2fc3e90d1ae6952451c016</string>
 
     <string name="new_pulse">PULSE</string>
     <string name="new_sys">SYS</string>
@@ -14,7 +15,6 @@
     <string name="new_pos">POS</string>
     <string name="new_mood">MOOD</string>
     <string name="new_time">TIME</string>
-    <string name="new_time_sep">:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
