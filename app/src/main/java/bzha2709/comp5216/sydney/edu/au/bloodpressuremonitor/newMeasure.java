@@ -96,7 +96,8 @@ public class newMeasure extends AppCompatActivity {
             }
             else
             {
-                Toast.makeText(this,"Data Collision",Toast.LENGTH_LONG).show();
+                mDAO.insertOrReplace(newMeasure);
+                Toast.makeText(this,"Updated successfully. time:"+selectedTime.toString(),Toast.LENGTH_LONG).show();
             }
         }
         else
