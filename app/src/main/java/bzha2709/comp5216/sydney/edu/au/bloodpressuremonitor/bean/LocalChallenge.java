@@ -2,8 +2,8 @@ package bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
-import org.greenrobot.greendao.annotation.Unique;
 
 /**
  * Created by Administrator on 2017/10/7.
@@ -12,13 +12,13 @@ import org.greenrobot.greendao.annotation.Unique;
 @Entity
 public class LocalChallenge
 {
-    @Property @Unique private int id;
+    @Id(autoincrement = true) private Long id;
     @Property private String name;
     @Property private String description;
     @Property private String img_path;
     @Property private boolean traceable;
-    @Generated(hash = 1042295822)
-    public LocalChallenge(int id, String name, String description, String img_path,
+    @Generated(hash = 1280235439)
+    public LocalChallenge(Long id, String name, String description, String img_path,
             boolean traceable) {
         this.id = id;
         this.name = name;
@@ -29,10 +29,10 @@ public class LocalChallenge
     @Generated(hash = 1876915432)
     public LocalChallenge() {
     }
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getName() {
@@ -59,4 +59,5 @@ public class LocalChallenge
     public void setTraceable(boolean traceable) {
         this.traceable = traceable;
     }
+
 }

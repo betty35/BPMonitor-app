@@ -3,6 +3,7 @@ package bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 
 /**
@@ -12,7 +13,7 @@ import org.greenrobot.greendao.annotation.Property;
 @Entity
 public class User
 {
-    @Property private int id;
+    @Id(autoincrement = true) private Long id;
     @Property private String email;
     @Property private String phone;
     @Property private String nickname;
@@ -21,8 +22,8 @@ public class User
     @Property private String area;
     @Property private String memo;
     @Property private String auth;
-    @Generated(hash = 1331716055)
-    public User(int id, String email, String phone, String nickname,
+    @Generated(hash = 784755692)
+    public User(Long id, String email, String phone, String nickname,
             int year_of_birth, short gender, String area, String memo,
             String auth) {
         this.id = id;
@@ -38,10 +39,10 @@ public class User
     @Generated(hash = 586692638)
     public User() {
     }
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getEmail() {
@@ -92,5 +93,6 @@ public class User
     public void setAuth(String auth) {
         this.auth = auth;
     }
+
 
 }

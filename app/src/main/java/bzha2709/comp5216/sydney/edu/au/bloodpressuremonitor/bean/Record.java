@@ -2,6 +2,7 @@ package bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Property;
 
@@ -14,20 +15,28 @@ import java.util.Date;
 @Entity
 public class Record
 {
-    @Property private int challenge_id;
+    @Id(autoincrement = true) private Long id;
+    @Property long challenge_id;
     @Index(unique = true) private Date finishTime;
-    @Generated(hash = 1847154764)
-    public Record(int challenge_id, Date finishTime) {
+    @Generated(hash = 964109379)
+    public Record(Long id, long challenge_id, Date finishTime) {
+        this.id = id;
         this.challenge_id = challenge_id;
         this.finishTime = finishTime;
     }
     @Generated(hash = 477726293)
     public Record() {
     }
-    public int getChallenge_id() {
+    public Long getId() {
+        return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public long getChallenge_id() {
         return this.challenge_id;
     }
-    public void setChallenge_id(int challenge_id) {
+    public void setChallenge_id(long challenge_id) {
         this.challenge_id = challenge_id;
     }
     public Date getFinishTime() {
@@ -36,4 +45,5 @@ public class Record
     public void setFinishTime(Date finishTime) {
         this.finishTime = finishTime;
     }
+
 }

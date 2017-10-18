@@ -38,10 +38,11 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.facebook.android:account-kit-sdk:4.+'
     testCompile 'junit:junit:4.12'
+    compile 'com.google.code.gson:gson:2.8.2'
 }
 
 greendao {
-    schemaVersion 3
+    schemaVersion 4
     daoPackage 'bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.db'
     targetGenDir 'src/main/java'
 }

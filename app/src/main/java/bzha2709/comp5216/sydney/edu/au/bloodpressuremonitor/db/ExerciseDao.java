@@ -15,7 +15,7 @@ import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.Exercise;
 /** 
  * DAO for table "EXERCISE".
 */
-public class ExerciseDao extends AbstractDao<Exercise, Void> {
+public class ExerciseDao extends AbstractDao<Exercise, Long> {
 
     public static final String TABLENAME = "EXERCISE";
 
@@ -24,8 +24,9 @@ public class ExerciseDao extends AbstractDao<Exercise, Void> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Time = new Property(0, java.util.Date.class, "time", false, "TIME");
-        public final static Property Steps = new Property(1, int.class, "steps", false, "STEPS");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Time = new Property(1, java.util.Date.class, "time", false, "TIME");
+        public final static Property Steps = new Property(2, int.class, "steps", false, "STEPS");
     }
 
 
@@ -41,8 +42,9 @@ public class ExerciseDao extends AbstractDao<Exercise, Void> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"EXERCISE\" (" + //
-                "\"TIME\" INTEGER," + // 0: time
-                "\"STEPS\" INTEGER NOT NULL );"); // 1: steps
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"TIME\" INTEGER," + // 1: time
+                "\"STEPS\" INTEGER NOT NULL );"); // 2: steps
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_EXERCISE_TIME ON \"EXERCISE\"" +
                 " (\"TIME\" ASC);");
@@ -58,59 +60,74 @@ public class ExerciseDao extends AbstractDao<Exercise, Void> {
     protected final void bindValues(DatabaseStatement stmt, Exercise entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         java.util.Date time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(1, time.getTime());
+            stmt.bindLong(2, time.getTime());
         }
-        stmt.bindLong(2, entity.getSteps());
+        stmt.bindLong(3, entity.getSteps());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, Exercise entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         java.util.Date time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(1, time.getTime());
+            stmt.bindLong(2, time.getTime());
         }
-        stmt.bindLong(2, entity.getSteps());
+        stmt.bindLong(3, entity.getSteps());
     }
 
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public Exercise readEntity(Cursor cursor, int offset) {
         Exercise entity = new Exercise( //
-            cursor.isNull(offset + 0) ? null : new java.util.Date(cursor.getLong(offset + 0)), // time
-            cursor.getInt(offset + 1) // steps
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)), // time
+            cursor.getInt(offset + 2) // steps
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, Exercise entity, int offset) {
-        entity.setTime(cursor.isNull(offset + 0) ? null : new java.util.Date(cursor.getLong(offset + 0)));
-        entity.setSteps(cursor.getInt(offset + 1));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setTime(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
+        entity.setSteps(cursor.getInt(offset + 2));
      }
     
     @Override
-    protected final Void updateKeyAfterInsert(Exercise entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected final Long updateKeyAfterInsert(Exercise entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public Void getKey(Exercise entity) {
-        return null;
+    public Long getKey(Exercise entity) {
+        if(entity != null) {
+            return entity.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean hasKey(Exercise entity) {
-        // TODO
-        return false;
+        return entity.getId() != null;
     }
 
     @Override

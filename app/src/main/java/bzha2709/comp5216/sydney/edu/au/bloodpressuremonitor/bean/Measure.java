@@ -2,6 +2,7 @@ package bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Property;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 @Entity
 public class Measure
 {
+    @Id(autoincrement = true) private Long id;
     @Index(unique = true) @Property private Date time;
     @Property private short dia;
     @Property private short sys;
@@ -24,9 +26,21 @@ public class Measure
 
     public Measure() {}
 
-    @Generated(hash = 1103264673)
-    public Measure(Date time, short dia, short sys, short pulse, short position,
-            short arm, short mood) {
+    @Generated(hash = 1151574372)
+    public Measure(Long id, Date time, short dia, short sys, short pulse,
+            short position, short arm, short mood) {
+        this.id = id;
+        this.time = time;
+        this.dia = dia;
+        this.sys = sys;
+        this.pulse = pulse;
+        this.position = position;
+        this.arm = arm;
+        this.mood = mood;
+    }
+
+    public Measure(Date time, short dia, short sys, short pulse,
+                   short position, short arm, short mood) {
         this.time = time;
         this.dia = dia;
         this.sys = sys;
@@ -90,5 +104,13 @@ public class Measure
 
     public void setMood(short mood) {
         this.mood = mood;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

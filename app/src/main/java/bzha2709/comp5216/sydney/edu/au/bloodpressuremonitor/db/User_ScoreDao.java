@@ -15,7 +15,7 @@ import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.User_Score;
 /** 
  * DAO for table "USER__SCORE".
 */
-public class User_ScoreDao extends AbstractDao<User_Score, Void> {
+public class User_ScoreDao extends AbstractDao<User_Score, Long> {
 
     public static final String TABLENAME = "USER__SCORE";
 
@@ -24,8 +24,9 @@ public class User_ScoreDao extends AbstractDao<User_Score, Void> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Time = new Property(0, java.util.Date.class, "time", false, "TIME");
-        public final static Property Score = new Property(1, double.class, "score", false, "SCORE");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Time = new Property(1, java.util.Date.class, "time", false, "TIME");
+        public final static Property Score = new Property(2, double.class, "score", false, "SCORE");
     }
 
 
@@ -41,8 +42,9 @@ public class User_ScoreDao extends AbstractDao<User_Score, Void> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER__SCORE\" (" + //
-                "\"TIME\" INTEGER," + // 0: time
-                "\"SCORE\" REAL NOT NULL );"); // 1: score
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"TIME\" INTEGER," + // 1: time
+                "\"SCORE\" REAL NOT NULL );"); // 2: score
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_USER__SCORE_TIME ON \"USER__SCORE\"" +
                 " (\"TIME\" ASC);");
@@ -58,59 +60,74 @@ public class User_ScoreDao extends AbstractDao<User_Score, Void> {
     protected final void bindValues(DatabaseStatement stmt, User_Score entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         java.util.Date time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(1, time.getTime());
+            stmt.bindLong(2, time.getTime());
         }
-        stmt.bindDouble(2, entity.getScore());
+        stmt.bindDouble(3, entity.getScore());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, User_Score entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         java.util.Date time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(1, time.getTime());
+            stmt.bindLong(2, time.getTime());
         }
-        stmt.bindDouble(2, entity.getScore());
+        stmt.bindDouble(3, entity.getScore());
     }
 
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public User_Score readEntity(Cursor cursor, int offset) {
         User_Score entity = new User_Score( //
-            cursor.isNull(offset + 0) ? null : new java.util.Date(cursor.getLong(offset + 0)), // time
-            cursor.getDouble(offset + 1) // score
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)), // time
+            cursor.getDouble(offset + 2) // score
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, User_Score entity, int offset) {
-        entity.setTime(cursor.isNull(offset + 0) ? null : new java.util.Date(cursor.getLong(offset + 0)));
-        entity.setScore(cursor.getDouble(offset + 1));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setTime(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
+        entity.setScore(cursor.getDouble(offset + 2));
      }
     
     @Override
-    protected final Void updateKeyAfterInsert(User_Score entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected final Long updateKeyAfterInsert(User_Score entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public Void getKey(User_Score entity) {
-        return null;
+    public Long getKey(User_Score entity) {
+        if(entity != null) {
+            return entity.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean hasKey(User_Score entity) {
-        // TODO
-        return false;
+        return entity.getId() != null;
     }
 
     @Override

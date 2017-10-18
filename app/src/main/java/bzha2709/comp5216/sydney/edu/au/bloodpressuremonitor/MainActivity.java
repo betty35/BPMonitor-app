@@ -4,7 +4,12 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.facebook.accountkit.AccessToken;
@@ -33,6 +38,11 @@ public class MainActivity extends AppCompatActivity
     UserDao userDao;
     User user=null;
 
+    private String[] mDrawerTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+
     private void initGreenDao()
     {
         helper = new DaoMaster.DevOpenHelper(this, "bp-monitor", null);
@@ -56,6 +66,8 @@ public class MainActivity extends AppCompatActivity
         BottomNavigationView navigation = findViewById(R.id.navigation);
         mOnNavigationItemSelectedListener = new MyBottomNaviListener(this,R.id.content);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        //mDrawerLayout.openDrawer(Gravity.LEFT);
     }
 
 
@@ -112,7 +124,7 @@ public class MainActivity extends AppCompatActivity
             {
                 user=new User();
                 user.setAuth(loginResult.getAccessToken().getAccountId());
-                int id=register(user);
+                long id=register(user);
                 user.setId(id);
                 userDao.save(user);
             }
@@ -120,6 +132,29 @@ public class MainActivity extends AppCompatActivity
     }
     
     // TODO: 2017/10/8
-    public int register(User user)
-    {return 0;}
+    public long register(User user)
+    {
+
+        return 0;
+    }
+
+
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+        private void selectItem(int position) {
+            // Highlight the selected item, update the title, and close the drawer
+            mDrawerList.setItemChecked(position, true);
+            mDrawerLayout.closeDrawer(mDrawerList);
+        }
+    }
+
+
+
+
+
+
 }

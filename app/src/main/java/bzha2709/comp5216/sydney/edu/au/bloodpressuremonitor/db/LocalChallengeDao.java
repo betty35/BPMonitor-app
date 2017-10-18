@@ -15,7 +15,7 @@ import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.LocalChallenge;
 /** 
  * DAO for table "LOCAL_CHALLENGE".
 */
-public class LocalChallengeDao extends AbstractDao<LocalChallenge, Void> {
+public class LocalChallengeDao extends AbstractDao<LocalChallenge, Long> {
 
     public static final String TABLENAME = "LOCAL_CHALLENGE";
 
@@ -24,7 +24,7 @@ public class LocalChallengeDao extends AbstractDao<LocalChallenge, Void> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, int.class, "id", false, "ID");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Description = new Property(2, String.class, "description", false, "DESCRIPTION");
         public final static Property Img_path = new Property(3, String.class, "img_path", false, "IMG_PATH");
@@ -44,7 +44,7 @@ public class LocalChallengeDao extends AbstractDao<LocalChallenge, Void> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"LOCAL_CHALLENGE\" (" + //
-                "\"ID\" INTEGER NOT NULL UNIQUE ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"NAME\" TEXT," + // 1: name
                 "\"DESCRIPTION\" TEXT," + // 2: description
                 "\"IMG_PATH\" TEXT," + // 3: img_path
@@ -60,7 +60,11 @@ public class LocalChallengeDao extends AbstractDao<LocalChallenge, Void> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, LocalChallenge entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String name = entity.getName();
         if (name != null) {
@@ -82,7 +86,11 @@ public class LocalChallengeDao extends AbstractDao<LocalChallenge, Void> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, LocalChallenge entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String name = entity.getName();
         if (name != null) {
@@ -102,14 +110,14 @@ public class LocalChallengeDao extends AbstractDao<LocalChallenge, Void> {
     }
 
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public LocalChallenge readEntity(Cursor cursor, int offset) {
         LocalChallenge entity = new LocalChallenge( //
-            cursor.getInt(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // description
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // img_path
@@ -120,7 +128,7 @@ public class LocalChallengeDao extends AbstractDao<LocalChallenge, Void> {
      
     @Override
     public void readEntity(Cursor cursor, LocalChallenge entity, int offset) {
-        entity.setId(cursor.getInt(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setDescription(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setImg_path(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
@@ -128,20 +136,23 @@ public class LocalChallengeDao extends AbstractDao<LocalChallenge, Void> {
      }
     
     @Override
-    protected final Void updateKeyAfterInsert(LocalChallenge entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected final Long updateKeyAfterInsert(LocalChallenge entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public Void getKey(LocalChallenge entity) {
-        return null;
+    public Long getKey(LocalChallenge entity) {
+        if(entity != null) {
+            return entity.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean hasKey(LocalChallenge entity) {
-        // TODO
-        return false;
+        return entity.getId() != null;
     }
 
     @Override

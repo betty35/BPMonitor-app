@@ -13,14 +13,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,10 +45,18 @@ public class Dashboard extends Fragment {
     Context mCon;
     Button addButton;
     MeasureDao mDAO;
-    LineChart chart;
+    LineChart lineChart;
+    PieChart pieChart;
+    PieData pieData;
     LineDataSet sysLDS;
     LineDataSet diaLDS;
     LineDataSet pulseLDS;
+    final short good_sys=120;
+    final short good_dia=80;
+    final short norm_sys=130;
+    final short norm_dia=85;
+    final short high_sys=140;
+    final short high_dia=90;
 
 
     DaoMaster.DevOpenHelper helper;
@@ -63,6 +77,16 @@ public class Dashboard extends Fragment {
         Toast.makeText(mCon,"datasize:"+measures.size(),Toast.LENGTH_LONG).show();
     }
 
+    public String bp_categorize(Measure m)
+    {
+        short sys=m.getSys();
+        short dia=m.getDia();
+        if(sys>high_sys||dia>high_dia) return "high";
+        if(sys>norm_sys||dia>norm_dia) return "normal-high";
+        if(sys>good_sys||dia>good_dia) return "normal";
+        else return "good";
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -77,14 +101,14 @@ public class Dashboard extends Fragment {
             }
         });
 
-
-        chart = view.findViewById(R.id.dashboard_linechart);
-        chart.setNoDataText("No data available yet. Please add a new set of blood pressure data.");
-        chart.setNoDataTextColor(Color.DKGRAY);
-        chart.setTouchEnabled(true);
-        chart.setDragEnabled(true);
-        updateLineChartData(chart);
-        XAxis xAxis = chart.getXAxis();
+        pieChart=view.findViewById(R.id.dashboard_piechart);
+        lineChart = view.findViewById(R.id.dashboard_linechart);
+        lineChart.setNoDataText("No data available yet. Please add a new set of blood pressure data.");
+        lineChart.setNoDataTextColor(Color.DKGRAY);
+        lineChart.setTouchEnabled(true);
+        lineChart.setDragEnabled(true);
+        updateLineChartData(lineChart);
+        XAxis xAxis = lineChart.getXAxis();
         xAxis.setLabelRotationAngle(90);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             private SimpleDateFormat mFormat = new SimpleDateFormat("HH:mm");
@@ -95,6 +119,8 @@ public class Dashboard extends Fragment {
         });
         xAxis.setAxisMaximum(DateUtil.getTodayEvening().getTime());
         xAxis.setAxisMinimum(DateUtil.getThisMorning().getTime());
+        updatePieData();
+        initPieChart(pieChart,pieData);
         return view;
     }
 
@@ -116,7 +142,14 @@ public class Dashboard extends Fragment {
         super.onResume();
         measures.clear();
         measures.addAll(mDAO.queryBuilder().orderAsc(MeasureDao.Properties.Time).list());
-        if(null!=chart) updateLineChartData(chart);
+        if(null!= lineChart) updateLineChartData(lineChart);
+        if(null!=pieChart)
+        {
+            updatePieData();
+            pieChart.clear();
+            pieChart.setData(pieData);
+            pieChart.invalidate();
+        }
     }
 
     @Override
@@ -130,7 +163,7 @@ public class Dashboard extends Fragment {
         {//update data
             measures.clear();
             measures.addAll(mDAO.queryBuilder().orderAsc(MeasureDao.Properties.Time).list());
-            if(null!=chart) updateLineChartData(chart);
+            if(null!= lineChart) updateLineChartData(lineChart);
         }
     }
 
@@ -170,6 +203,38 @@ public class Dashboard extends Fragment {
 
     }
 
+
+    private void updatePieData()
+    {
+        ArrayList<PieEntry> entries =new ArrayList<PieEntry>();
+        ArrayList<Integer> g=new ArrayList<Integer>();
+        ArrayList<Integer> n=new ArrayList<Integer>();
+        ArrayList<Integer> nh=new ArrayList<Integer>();
+        ArrayList<Integer> h=new ArrayList<Integer>();
+        for(int i=0;i<measures.size();i++)
+        {
+            Measure m=measures.get(i);
+            String cate=bp_categorize(m);
+            if(cate.equals("good")) g.add(i);
+            else if(cate.equals("normal")) n.add(i);
+            else if(cate.equals("normal-high")) nh.add(i);
+            else h.add(i);
+        }
+
+        entries.add(new PieEntry(g.size()*1f/measures.size(),"healthy"));
+        entries.add(new PieEntry(n.size()*1f/measures.size(),"normal"));
+        entries.add(new PieEntry(nh.size()*1f/measures.size(),"normal-high"));
+        entries.add(new PieEntry(h.size()*1f/measures.size(),"high"));
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+        for (int c : ColorTemplate.LIBERTY_COLORS) colors.add(c);
+        for (int c : ColorTemplate.JOYFUL_COLORS) colors.add(c);
+        for (int c : ColorTemplate.COLORFUL_COLORS) colors.add(c);
+        colors.add(ColorTemplate.getHoloBlue());
+        PieDataSet dataSet =new PieDataSet(entries,"");
+        dataSet.setColors(colors);
+        pieData=new PieData(dataSet);
+    }
+
     private void initGreenDao()
     {
         helper = new DaoMaster.DevOpenHelper(mCon, "bp-monitor", null);
@@ -187,5 +252,23 @@ public class Dashboard extends Fragment {
         db.close();
         helper.close();
     }
+
+
+    private void initPieChart(PieChart mChart,PieData pieData) {
+        mChart.setUsePercentValues(true);
+        mChart.setExtraOffsets(5,10,5,5);  //设置间距
+        mChart.setDragDecelerationFrictionCoef(0.95f);
+        mChart.setTransparentCircleColor(Color.WHITE);
+        mChart.setTransparentCircleAlpha(110);
+        mChart.setTransparentCircleRadius(61f);
+        mChart.setTouchEnabled(false);  //设置是否响应点击触摸
+        mChart.setDrawEntryLabels(false);  //设置是否绘制标签
+        mChart.setRotationAngle(0); //设置旋转角度
+        mChart.setRotationEnabled(true); //设置是否旋转
+        mChart.setHighlightPerTapEnabled(false);  //设置是否高亮显示触摸的区域
+        mChart.setData(pieData);  //设置数据
+        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);  //设置动画效果
+    }
+
 
 }

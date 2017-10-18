@@ -15,7 +15,7 @@ import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.Record;
 /** 
  * DAO for table "RECORD".
 */
-public class RecordDao extends AbstractDao<Record, Void> {
+public class RecordDao extends AbstractDao<Record, Long> {
 
     public static final String TABLENAME = "RECORD";
 
@@ -24,8 +24,9 @@ public class RecordDao extends AbstractDao<Record, Void> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Challenge_id = new Property(0, int.class, "challenge_id", false, "CHALLENGE_ID");
-        public final static Property FinishTime = new Property(1, java.util.Date.class, "finishTime", false, "FINISH_TIME");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Challenge_id = new Property(1, long.class, "challenge_id", false, "CHALLENGE_ID");
+        public final static Property FinishTime = new Property(2, java.util.Date.class, "finishTime", false, "FINISH_TIME");
     }
 
 
@@ -41,8 +42,9 @@ public class RecordDao extends AbstractDao<Record, Void> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"RECORD\" (" + //
-                "\"CHALLENGE_ID\" INTEGER NOT NULL ," + // 0: challenge_id
-                "\"FINISH_TIME\" INTEGER);"); // 1: finishTime
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"CHALLENGE_ID\" INTEGER NOT NULL ," + // 1: challenge_id
+                "\"FINISH_TIME\" INTEGER);"); // 2: finishTime
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_RECORD_FINISH_TIME ON \"RECORD\"" +
                 " (\"FINISH_TIME\" ASC);");
@@ -57,60 +59,75 @@ public class RecordDao extends AbstractDao<Record, Void> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Record entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getChallenge_id());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+        stmt.bindLong(2, entity.getChallenge_id());
  
         java.util.Date finishTime = entity.getFinishTime();
         if (finishTime != null) {
-            stmt.bindLong(2, finishTime.getTime());
+            stmt.bindLong(3, finishTime.getTime());
         }
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, Record entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getChallenge_id());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+        stmt.bindLong(2, entity.getChallenge_id());
  
         java.util.Date finishTime = entity.getFinishTime();
         if (finishTime != null) {
-            stmt.bindLong(2, finishTime.getTime());
+            stmt.bindLong(3, finishTime.getTime());
         }
     }
 
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public Record readEntity(Cursor cursor, int offset) {
         Record entity = new Record( //
-            cursor.getInt(offset + 0), // challenge_id
-            cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)) // finishTime
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.getLong(offset + 1), // challenge_id
+            cursor.isNull(offset + 2) ? null : new java.util.Date(cursor.getLong(offset + 2)) // finishTime
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, Record entity, int offset) {
-        entity.setChallenge_id(cursor.getInt(offset + 0));
-        entity.setFinishTime(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setChallenge_id(cursor.getLong(offset + 1));
+        entity.setFinishTime(cursor.isNull(offset + 2) ? null : new java.util.Date(cursor.getLong(offset + 2)));
      }
     
     @Override
-    protected final Void updateKeyAfterInsert(Record entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected final Long updateKeyAfterInsert(Record entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public Void getKey(Record entity) {
-        return null;
+    public Long getKey(Record entity) {
+        if(entity != null) {
+            return entity.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean hasKey(Record entity) {
-        // TODO
-        return false;
+        return entity.getId() != null;
     }
 
     @Override
