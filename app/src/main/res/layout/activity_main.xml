@@ -9,28 +9,11 @@
     android:orientation="vertical"
     tools:context="bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/main_view"
-        android:layout_width="match_parent"
+    <include
+        layout="@layout/app_bar"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <FrameLayout
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_above="@+id/navigation"
-             />
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="?android:attr/windowBackground"
-            app:menu="@menu/navigation" />
-    </RelativeLayout>
+        android:layout_width="match_parent"
+        />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nv_menu_left"

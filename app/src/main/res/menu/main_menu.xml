@@ -3,8 +3,10 @@
 
     <item
         android:id="@+id/menu_user_setting"
+        android:icon="@drawable/ic_menu_manage"
         android:title="@string/m_menu_user_setting" />
     <item
         android:id="@+id/menu_data_synchro"
+        android:icon="@drawable/ic_menu_send"
         android:title="@string/m_synchro" />
 </menu>

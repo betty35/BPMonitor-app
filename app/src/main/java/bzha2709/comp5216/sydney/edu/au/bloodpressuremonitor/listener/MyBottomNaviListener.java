@@ -11,7 +11,6 @@ import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.Dashboard;
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.MainActivity;
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.Msgs;
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.R;
-import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.Records;
 
 
 /**
@@ -23,7 +22,6 @@ public class MyBottomNaviListener implements BottomNavigationView.OnNavigationIt
     MainActivity m;
     Fragment currentFragment;
     Dashboard dashboard;
-    Records records;
     Msgs msgs;
     Challenges challenges;
     int containerId;
@@ -40,7 +38,6 @@ public class MyBottomNaviListener implements BottomNavigationView.OnNavigationIt
     public void initiateViews()
     {
         dashboard=new Dashboard();
-        records=new Records();
         msgs=new Msgs();
         challenges=new Challenges();
     }
@@ -60,7 +57,6 @@ public class MyBottomNaviListener implements BottomNavigationView.OnNavigationIt
         {
             if(id==R.id.navi_dashboard) f=dashboard;
             else if(id==R.id.navi_challenge)f=challenges;
-            else if(id==R.id.navi_record) f=records;
             else f=msgs;
         }
         currentFragment=f;

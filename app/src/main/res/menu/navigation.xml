@@ -3,13 +3,8 @@
 
     <item
         android:id="@+id/navi_dashboard"
-        android:icon="@drawable/ic_dashboard"
+        android:icon="@drawable/ic_stats"
         android:title="@string/navi_dashboard" />
-
-    <item
-        android:id="@+id/navi_record"
-        android:icon="@drawable/ic_record"
-        android:title="@string/navi_record" />
 
     <item
         android:id="@+id/navi_challenge"
