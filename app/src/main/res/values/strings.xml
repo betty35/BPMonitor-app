@@ -1,11 +1,14 @@
 <resources>
-    <string name="app_name">Blood Pressure Monitor</string>
+    <string name="serverURL">http://52.183.119.175:8080/BPNote/</string>
+    <string name="shareURL">http://52.183.119.175:8080/BPNoteShare/html/share.html?</string>
+    <string name="app_name">BP Note</string>
     <string name="navi_dashboard">Stat</string>
     <string name="navi_add">Add</string>
     <string name="navi_challenge">Challenge</string>
-    <string name="navi_msg">msg</string>
+    <string name="navi_history">History</string>
     <string name="navi_record">Record</string>
     <string name="facebook_app_id">121362621903131</string>
+    <string name="fb_login_protocol_scheme">fb121362621903131</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">78efa94f8f2fc3e90d1ae6952451c016</string>
 
     <string name="new_pulse">PULSE</string>
@@ -21,7 +24,8 @@
 
     <!--main menu-->
     <string name="m_menu_user_setting">User Settings</string>
-    <string name="m_synchro">Synchro Data</string>
+    <string name="m_synchro">Synch Data</string>
+    <string name="m_share">Share BP Data</string>
     <string name="drawer_open">opened</string>
     <string name="drawer_close">closed</string>
 
@@ -33,4 +37,33 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="alarm_setting_title">Remind Me</string>
+    <string name="new_alarm_title">Edit Alarm</string>
+
+
+    <!--labels-->
+    <string name="alarm_type_label">Type</string>
+    <string name="alarm_msg_label">Memo</string>
+    <string name="from_label">From</string>
+    <string name="to_label">To</string>
+
+    <!--radio buttons-->
+    <string name="radio_measure">BP Measure</string>
+    <string name="radio_med">Medication</string>
+
+
+    <!--text on buttons-->
+    <string name="button_confirm">Confirm</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_edit">Edit</string>
+    <string name="button_delete">Del</string>
+    <string name="button_new">New</string>
+    <string name="button_search">Search</string>
+    <string name="ok">OK</string>
+    <string name="back">BACK</string>
+
+
+    <!--notices-->
+    <string name="share_info1">Please copy this URL and send it to the person you want to share your blood pressure data with.</string>
+    <string name="share_info2">Please notice that this link will only be available for 2 days from your last updating of data sharing password.</string>
 </resources>

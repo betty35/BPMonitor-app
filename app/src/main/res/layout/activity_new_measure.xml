@@ -43,6 +43,7 @@
             android:ems="10"
             android:inputType="number"
             android:maxLength="3"
+            android:layout_marginStart="@dimen/margin_m"
             android:layout_alignBaseline="@+id/sys_l"
             android:layout_toEndOf="@+id/sys_l" />
 
@@ -61,11 +62,12 @@
         android:id="@+id/dia_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/dia_l"
-        android:layout_toEndOf="@+id/dia_l"
         android:ems="10"
         android:inputType="number"
-        android:maxLength="3" />
+        android:maxLength="3"
+        android:layout_alignBaseline="@+id/dia_l"
+        android:layout_alignBottom="@+id/dia_l"
+        android:layout_alignStart="@+id/sys_text" />
 
 
     <TextView
@@ -82,12 +84,12 @@
         android:id="@+id/pulse_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/pulse_l"
-        android:layout_below="@id/dia_text"
-        android:layout_toEndOf="@id/pulse_l"
         android:ems="10"
         android:inputType="number"
-        android:maxLength="3" />
+        android:maxLength="3"
+        android:layout_alignBaseline="@+id/pulse_l"
+        android:layout_alignBottom="@+id/pulse_l"
+        android:layout_alignStart="@+id/dia_text" />
 
         <TextView
             android:id="@+id/arm_l"
@@ -103,9 +105,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/select_arm"
-            android:layout_below="@id/pulse_text"
-            android:layout_toEndOf="@id/arm_l"
-            android:layout_alignBaseline="@+id/arm_l"/>
+            android:layout_alignBaseline="@+id/arm_l"
+            android:layout_alignBottom="@+id/arm_l"
+            android:layout_alignStart="@+id/pulse_text" />
 
         <TextView
             android:id="@+id/pos_l"
@@ -121,10 +123,10 @@
         android:id="@+id/pos_spin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:entries="@array/select_pos"
         android:layout_alignBaseline="@+id/pos_l"
-        android:layout_below="@+id/arm_spin"
-        android:layout_toEndOf="@+id/pos_l"
-        android:entries="@array/select_pos" />
+        android:layout_alignBottom="@+id/pos_l"
+        android:layout_alignStart="@+id/arm_spin" />
 
         <TextView
             android:id="@+id/mood_l"
@@ -140,10 +142,10 @@
         android:id="@+id/mood_spin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:entries="@array/select_mood"
         android:layout_alignBaseline="@+id/mood_l"
-        android:layout_below="@+id/pos_spin"
-        android:layout_toEndOf="@id/mood_l"
-        android:entries="@array/select_mood" />
+        android:layout_alignBottom="@+id/mood_l"
+        android:layout_alignStart="@+id/pos_spin" />
 
         <TextView
             android:id="@+id/time_l"
@@ -151,8 +153,8 @@
             android:layout_height="wrap_content"
             android:text="@string/new_time"
             android:textSize="18sp"
-            android:layout_below="@+id/mood_l"
-            android:layout_alignEnd="@+id/mood_l"
+            android:layout_below="@id/mood_l"
+            android:layout_alignEnd="@id/mood_l"
             android:layout_marginTop="@dimen/line_width" />
         <TextView
             android:id="@+id/time_text_datetime"
@@ -160,6 +162,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/mood_spin"
             android:layout_toEndOf="@id/time_l"
-            android:layout_alignBaseline="@+id/time_l" />
+            android:layout_alignStart="@id/mood_spin"
+            android:layout_alignBaseline="@id/time_l" />
 
 </RelativeLayout>

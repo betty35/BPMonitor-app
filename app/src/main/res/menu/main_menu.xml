@@ -9,4 +9,8 @@
         android:id="@+id/menu_data_synchro"
         android:icon="@drawable/ic_menu_send"
         android:title="@string/m_synchro" />
+    <item
+        android:id="@+id/menu_data_share"
+        android:icon="@drawable/ic_menu_share"
+        android:title="@string/m_share" />
 </menu>

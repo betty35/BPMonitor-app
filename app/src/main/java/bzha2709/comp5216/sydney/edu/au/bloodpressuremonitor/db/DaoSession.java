@@ -8,6 +8,7 @@ import org.greenrobot.greendao.internal.DaoConfig;
 
 import java.util.Map;
 
+import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.Alarm;
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.Exercise;
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.LocalChallenge;
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.Measure;
@@ -24,6 +25,7 @@ import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.User_Score;
  */
 public class DaoSession extends AbstractDaoSession {
 
+    private final DaoConfig alarmDaoConfig;
     private final DaoConfig exerciseDaoConfig;
     private final DaoConfig localChallengeDaoConfig;
     private final DaoConfig measureDaoConfig;
@@ -31,6 +33,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig userDaoConfig;
     private final DaoConfig user_ScoreDaoConfig;
 
+    private final AlarmDao alarmDao;
     private final ExerciseDao exerciseDao;
     private final LocalChallengeDao localChallengeDao;
     private final MeasureDao measureDao;
@@ -41,6 +44,9 @@ public class DaoSession extends AbstractDaoSession {
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
         super(db);
+
+        alarmDaoConfig = daoConfigMap.get(AlarmDao.class).clone();
+        alarmDaoConfig.initIdentityScope(type);
 
         exerciseDaoConfig = daoConfigMap.get(ExerciseDao.class).clone();
         exerciseDaoConfig.initIdentityScope(type);
@@ -60,6 +66,7 @@ public class DaoSession extends AbstractDaoSession {
         user_ScoreDaoConfig = daoConfigMap.get(User_ScoreDao.class).clone();
         user_ScoreDaoConfig.initIdentityScope(type);
 
+        alarmDao = new AlarmDao(alarmDaoConfig, this);
         exerciseDao = new ExerciseDao(exerciseDaoConfig, this);
         localChallengeDao = new LocalChallengeDao(localChallengeDaoConfig, this);
         measureDao = new MeasureDao(measureDaoConfig, this);
@@ -67,6 +74,7 @@ public class DaoSession extends AbstractDaoSession {
         userDao = new UserDao(userDaoConfig, this);
         user_ScoreDao = new User_ScoreDao(user_ScoreDaoConfig, this);
 
+        registerDao(Alarm.class, alarmDao);
         registerDao(Exercise.class, exerciseDao);
         registerDao(LocalChallenge.class, localChallengeDao);
         registerDao(Measure.class, measureDao);
@@ -76,12 +84,17 @@ public class DaoSession extends AbstractDaoSession {
     }
     
     public void clear() {
+        alarmDaoConfig.clearIdentityScope();
         exerciseDaoConfig.clearIdentityScope();
         localChallengeDaoConfig.clearIdentityScope();
         measureDaoConfig.clearIdentityScope();
         recordDaoConfig.clearIdentityScope();
         userDaoConfig.clearIdentityScope();
         user_ScoreDaoConfig.clearIdentityScope();
+    }
+
+    public AlarmDao getAlarmDao() {
+        return alarmDao;
     }
 
     public ExerciseDao getExerciseDao() {

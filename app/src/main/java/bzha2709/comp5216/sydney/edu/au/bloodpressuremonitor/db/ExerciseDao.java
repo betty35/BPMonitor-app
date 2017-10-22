@@ -25,7 +25,7 @@ public class ExerciseDao extends AbstractDao<Exercise, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Time = new Property(1, java.util.Date.class, "time", false, "TIME");
+        public final static Property Time = new Property(1, Long.class, "time", false, "TIME");
         public final static Property Steps = new Property(2, int.class, "steps", false, "STEPS");
     }
 
@@ -65,9 +65,9 @@ public class ExerciseDao extends AbstractDao<Exercise, Long> {
             stmt.bindLong(1, id);
         }
  
-        java.util.Date time = entity.getTime();
+        Long time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(2, time.getTime());
+            stmt.bindLong(2, time);
         }
         stmt.bindLong(3, entity.getSteps());
     }
@@ -81,9 +81,9 @@ public class ExerciseDao extends AbstractDao<Exercise, Long> {
             stmt.bindLong(1, id);
         }
  
-        java.util.Date time = entity.getTime();
+        Long time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(2, time.getTime());
+            stmt.bindLong(2, time);
         }
         stmt.bindLong(3, entity.getSteps());
     }
@@ -97,7 +97,7 @@ public class ExerciseDao extends AbstractDao<Exercise, Long> {
     public Exercise readEntity(Cursor cursor, int offset) {
         Exercise entity = new Exercise( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)), // time
+            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // time
             cursor.getInt(offset + 2) // steps
         );
         return entity;
@@ -106,7 +106,7 @@ public class ExerciseDao extends AbstractDao<Exercise, Long> {
     @Override
     public void readEntity(Cursor cursor, Exercise entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setTime(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
+        entity.setTime(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setSteps(cursor.getInt(offset + 2));
      }
     

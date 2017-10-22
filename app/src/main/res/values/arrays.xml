@@ -25,4 +25,13 @@
         <item>menu3</item>
         <item>menu4</item>
     </string-array>
+
+    <string-array name="gender">
+        <item>Secret</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Trans Male</item>
+        <item>Trans Female</item>
+        <item>Other</item>
+    </string-array>
 </resources>

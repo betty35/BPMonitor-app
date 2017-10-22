@@ -1,7 +1,9 @@
 package bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -87,18 +89,37 @@ public class newMeasure extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            Measure newMeasure=new Measure(selectedTime,dia,sys,pulse,pos,arm,mood);
-            List<Measure> ml=mDAO.queryBuilder().where(MeasureDao.Properties.Time.eq(selectedTime)).list();
-            if(ml.size()==0)
-            {
-                mDAO.insert(newMeasure);
-                Toast.makeText(this,"Saved successfully. time:"+selectedTime.toString(),Toast.LENGTH_LONG).show();
-            }
-            else
-            {
-                mDAO.insertOrReplace(newMeasure);
-                Toast.makeText(this,"Updated successfully. time:"+selectedTime.toString(),Toast.LENGTH_LONG).show();
-            }
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(newMeasure.this);
+            builder.setTitle("Confirm data")
+                    .setMessage("SYS:"+sys+", DIA:"+dia+", PULSE:"+pulse+", POS:"+getResources().getStringArray(R.array.select_pos)[pos]+
+                    ", ARM:"+getResources().getStringArray(R.array.select_arm)[arm]+", MOOD:"+getResources().getStringArray(R.array.select_mood)[mood]
+                    +", Time:"+selectedTime.toString())
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Measure newMeasure=new Measure(null,selectedTime.getTime(),dia,sys,pulse,pos,arm,mood);
+                            List<Measure> ml=mDAO.queryBuilder().where(MeasureDao.Properties.Time.eq(selectedTime)).list();
+                            if(ml.size()==0)
+                            {
+                                mDAO.insert(newMeasure);
+                                Toast.makeText(newMeasure.this,"Saved successfully.",Toast.LENGTH_LONG).show();
+                            }
+                            else
+                            {
+                                mDAO.insertOrReplace(newMeasure);
+                                Toast.makeText(newMeasure.this,"Updated successfully.",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+            builder.create().show();
+
+
+
         }
         else
         {
@@ -122,25 +143,28 @@ public class newMeasure extends AppCompatActivity {
     private void showDialogPick(final TextView timeText) {
         final StringBuffer time = new StringBuffer();
         final Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
+        final int year_ = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        final int min = calendar.get(Calendar.MINUTE);
         final TimePickerDialog timePickerDialog = new TimePickerDialog(newMeasure.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 time.append(" " + hourOfDay + ":" + minute);
                 timeText.setText(time);
             }
-        }, hour, minute, true);
+        }, hour, min, true);
         DatePickerDialog datePickerDialog = new DatePickerDialog(newMeasure.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                if(year>year_)year=year_;
+                if(monthOfYear>month)monthOfYear=month;
+                if(dayOfMonth>day) dayOfMonth=day;
                 time.append(year + "-" + (monthOfYear+1) + "-" + dayOfMonth);
                 timePickerDialog.show();
             }
-        }, year, month, day);
+        }, year_, month, day);
         datePickerDialog.show();
     }
 
@@ -155,10 +179,10 @@ public class newMeasure extends AppCompatActivity {
 
     @Override public void onDestroy()
     {
-        super.onDestroy();
         daoSession.clear();
         daoSession=null;
         db.close();
         helper.close();
+        super.onDestroy();
     }
 }

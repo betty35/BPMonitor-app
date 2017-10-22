@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -85,9 +84,7 @@ public class AlarmSetting extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         toggleMenu(view);
-                        Intent intent=new Intent(AlarmSetting.this,NewAlarm.class);
-                        intent.putExtra("alarm", alarmArray.get(i));
-                        startActivityForResult(intent, ConsUtils.NEW_ALARM);
+                        editAlarm(alarmArray.get(i));
                     }
                 });
             }
@@ -125,10 +122,16 @@ public class AlarmSetting extends AppCompatActivity {
 
     @Override public void onResume()
     {
-        super.onResume();
         refreshAlarms();
+        super.onResume();
     }
 
+    public void editAlarm(Alarm a)
+    {
+        Intent intent=new Intent(AlarmSetting.this,NewAlarm.class);
+        intent.putExtra("alarm", a);
+        startActivity(intent);
+    }
 
 
     public void refreshAlarms()
@@ -195,17 +198,14 @@ public class AlarmSetting extends AppCompatActivity {
 
 
     @Override
-    protected void onActivityResult(
-            final int requestCode,
-            final int resultCode,
-            final Intent data)
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode,resultCode,data);
         if(requestCode==ConsUtils.NEW_ALARM)
         {
             if(requestCode==RESULT_OK)
             {
-                Toast.makeText(this,"Edited",Toast.LENGTH_LONG).show();
+                //Toast.makeText(this,"Edited",Toast.LENGTH_LONG).show();
                 refreshAlarms();
             }
         }

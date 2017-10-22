@@ -11,12 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -43,7 +43,7 @@ public class Dashboard extends Fragment {
     View view;
     List<Measure> measures;
     Context mCon;
-    Button addButton;
+    Button addButton, alarmButton;
     MeasureDao mDAO;
     LineChart lineChart;
     PieChart pieChart;
@@ -73,8 +73,8 @@ public class Dashboard extends Fragment {
         mCon=getActivity();
         initGreenDao();
         measures=mDAO.queryBuilder().orderAsc(MeasureDao.Properties.Time).list();
-        if(measures.size()>0)
-        Toast.makeText(mCon,"datasize:"+measures.size(),Toast.LENGTH_LONG).show();
+        //if(measures.size()>0)
+        //Toast.makeText(mCon,"datasize:"+measures.size(),Toast.LENGTH_LONG).show();
     }
 
     public String bp_categorize(Measure m)
@@ -100,25 +100,37 @@ public class Dashboard extends Fragment {
                 startActivity(intent);
             }
         });
-
+        alarmButton=view.findViewById(R.id.set_alarm_button);
+        alarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mCon,AlarmSetting.class);
+                startActivity(intent);
+            }
+        });
         pieChart=view.findViewById(R.id.dashboard_piechart);
         lineChart = view.findViewById(R.id.dashboard_linechart);
+        lineChart.zoom(4.0f,1.1f,new Date().getTime(),80.0f);
+        lineChart.animateX(800);
+        Description d2=new Description();
+        d2.setText("BP & Pulse");
+        lineChart.setDescription(d2);
         lineChart.setNoDataText("No data available yet. Please add a new set of blood pressure data.");
         lineChart.setNoDataTextColor(Color.DKGRAY);
         lineChart.setTouchEnabled(true);
         lineChart.setDragEnabled(true);
         updateLineChartData(lineChart);
         XAxis xAxis = lineChart.getXAxis();
-        xAxis.setLabelRotationAngle(90);
+        xAxis.setLabelRotationAngle(30);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
-            private SimpleDateFormat mFormat = new SimpleDateFormat("HH:mm");
+            private SimpleDateFormat mFormat = new SimpleDateFormat("dd-MM HH:mm");
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 return mFormat.format(new Date((long)value));
             }
         });
-        xAxis.setAxisMaximum(DateUtil.getTodayEvening().getTime());
-        xAxis.setAxisMinimum(DateUtil.getThisMorning().getTime());
+        xAxis.setAxisMaximum(DateUtil.getEndOfThisWeek().getTime());
+        xAxis.setAxisMinimum(DateUtil.getBeginningOfThisWeek().getTime());
         updatePieData();
         initPieChart(pieChart,pieData);
         return view;
@@ -175,9 +187,9 @@ public class Dashboard extends Fragment {
         for(int i=0;i<measures.size();i++)
         {
             Measure m1=measures.get(i);
-            sys.add(new Entry(m1.getTime().getTime(),m1.getSys()));
-            dia.add(new Entry(m1.getTime().getTime(),m1.getDia()));
-            pulse.add(new Entry(m1.getTime().getTime(),m1.getPulse()));
+            sys.add(new Entry(m1.getTime(),m1.getSys()));
+            dia.add(new Entry(m1.getTime(),m1.getDia()));
+            pulse.add(new Entry(m1.getTime(),m1.getPulse()));
         }
 
         if(chart.getData()!=null) chart.clear();
@@ -186,9 +198,15 @@ public class Dashboard extends Fragment {
             sysLDS = new LineDataSet(sys, "SYS");
             diaLDS = new LineDataSet(dia, "DIA");
             pulseLDS = new LineDataSet(pulse, "PULSE");
-            sysLDS.setLineWidth(1f);
-            sysLDS.setCircleRadius(3f);
+            sysLDS.setLineWidth(1.5f);
+            sysLDS.setCircleRadius(1.5f);
             sysLDS.setDrawCircleHole(false);
+            diaLDS.setLineWidth(1.5f);
+            diaLDS.setCircleRadius(1.5f);
+            diaLDS.setDrawCircleHole(false);
+            pulseLDS.setLineWidth(1.5f);
+            pulseLDS.setCircleRadius(1.5f);
+            pulseLDS.setDrawCircleHole(false);
             sysLDS.setColor(ContextCompat.getColor(mCon, R.color.color_sys));
             diaLDS.setColor(ContextCompat.getColor(mCon, R.color.color_dia));
             pulseLDS.setColor(ContextCompat.getColor(mCon, R.color.color_pulse));
@@ -226,8 +244,7 @@ public class Dashboard extends Fragment {
         entries.add(new PieEntry(nh.size()*1f/measures.size(),"normal-high"));
         entries.add(new PieEntry(h.size()*1f/measures.size(),"high"));
         ArrayList<Integer> colors = new ArrayList<Integer>();
-        for (int c : ColorTemplate.LIBERTY_COLORS) colors.add(c);
-        for (int c : ColorTemplate.JOYFUL_COLORS) colors.add(c);
+        for (int c : ColorTemplate.VORDIPLOM_COLORS) colors.add(c);
         for (int c : ColorTemplate.COLORFUL_COLORS) colors.add(c);
         colors.add(ColorTemplate.getHoloBlue());
         PieDataSet dataSet =new PieDataSet(entries,"");
@@ -246,28 +263,30 @@ public class Dashboard extends Fragment {
 
     @Override public void onDestroy()
     {
-        super.onDestroy();
         daoSession.clear();
         daoSession=null;
         db.close();
         helper.close();
+        super.onDestroy();
     }
 
 
     private void initPieChart(PieChart mChart,PieData pieData) {
         mChart.setUsePercentValues(true);
-        mChart.setExtraOffsets(5,10,5,5);  //设置间距
+        Description d=new Description();
+        d.setText("Distribution");
+        mChart.setDescription(d);
+        mChart.setExtraOffsets(-5,-5,-5,-5);
         mChart.setDragDecelerationFrictionCoef(0.95f);
         mChart.setTransparentCircleColor(Color.WHITE);
         mChart.setTransparentCircleAlpha(110);
         mChart.setTransparentCircleRadius(61f);
-        mChart.setTouchEnabled(false);  //设置是否响应点击触摸
-        mChart.setDrawEntryLabels(false);  //设置是否绘制标签
-        mChart.setRotationAngle(0); //设置旋转角度
-        mChart.setRotationEnabled(true); //设置是否旋转
-        mChart.setHighlightPerTapEnabled(false);  //设置是否高亮显示触摸的区域
-        mChart.setData(pieData);  //设置数据
-        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);  //设置动画效果
+        mChart.setTouchEnabled(false);
+        mChart.setDrawEntryLabels(false);
+        mChart.setRotationEnabled(true);
+        mChart.setHighlightPerTapEnabled(false);
+        mChart.setData(pieData);
+        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
     }
 
 

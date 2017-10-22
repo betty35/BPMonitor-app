@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.DataShare">
+
+
+    <TextView
+        android:id="@+id/data_share_l"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/margin_large"
+        android:text="@string/share_info1" />
+
+    <EditText
+        android:id="@+id/data_share_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/data_share_l"
+        android:layout_below="@+id/data_share_l"
+        android:ems="10"
+        android:inputType="textMultiLine|textUri"
+        android:text=""
+        android:layout_alignEnd="@+id/data_share_l"/>
+
+    <TextView
+        android:id="@+id/data_share_l2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/data_share_url"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/margin_large"
+        android:text="@string/share_info2" />
+
+    <Button
+        android:id="@+id/data_share_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="57dp"
+        android:text="@string/back"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

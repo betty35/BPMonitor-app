@@ -8,4 +8,10 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="margin_large">48dp</dimen>
+    <dimen name="margin_ml">36dp</dimen>
+    <dimen name="margin_m">24dp</dimen>
+    <dimen name="margin_s">12dp</dimen>
+    <dimen name="margin_xs">6dp</dimen>
+    <dimen name="challenge_img">100dp</dimen>
 </resources>

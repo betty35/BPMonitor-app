@@ -25,7 +25,7 @@ public class MeasureDao extends AbstractDao<Measure, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Time = new Property(1, java.util.Date.class, "time", false, "TIME");
+        public final static Property Time = new Property(1, Long.class, "time", false, "TIME");
         public final static Property Dia = new Property(2, short.class, "dia", false, "DIA");
         public final static Property Sys = new Property(3, short.class, "sys", false, "SYS");
         public final static Property Pulse = new Property(4, short.class, "pulse", false, "PULSE");
@@ -75,9 +75,9 @@ public class MeasureDao extends AbstractDao<Measure, Long> {
             stmt.bindLong(1, id);
         }
  
-        java.util.Date time = entity.getTime();
+        Long time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(2, time.getTime());
+            stmt.bindLong(2, time);
         }
         stmt.bindLong(3, entity.getDia());
         stmt.bindLong(4, entity.getSys());
@@ -96,9 +96,9 @@ public class MeasureDao extends AbstractDao<Measure, Long> {
             stmt.bindLong(1, id);
         }
  
-        java.util.Date time = entity.getTime();
+        Long time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(2, time.getTime());
+            stmt.bindLong(2, time);
         }
         stmt.bindLong(3, entity.getDia());
         stmt.bindLong(4, entity.getSys());
@@ -117,7 +117,7 @@ public class MeasureDao extends AbstractDao<Measure, Long> {
     public Measure readEntity(Cursor cursor, int offset) {
         Measure entity = new Measure( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)), // time
+            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // time
             cursor.getShort(offset + 2), // dia
             cursor.getShort(offset + 3), // sys
             cursor.getShort(offset + 4), // pulse
@@ -131,7 +131,7 @@ public class MeasureDao extends AbstractDao<Measure, Long> {
     @Override
     public void readEntity(Cursor cursor, Measure entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setTime(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
+        entity.setTime(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setDia(cursor.getShort(offset + 2));
         entity.setSys(cursor.getShort(offset + 3));
         entity.setPulse(cursor.getShort(offset + 4));

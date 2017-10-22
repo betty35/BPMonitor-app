@@ -25,7 +25,7 @@ public class User_ScoreDao extends AbstractDao<User_Score, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Time = new Property(1, java.util.Date.class, "time", false, "TIME");
+        public final static Property Time = new Property(1, Long.class, "time", false, "TIME");
         public final static Property Score = new Property(2, double.class, "score", false, "SCORE");
     }
 
@@ -65,9 +65,9 @@ public class User_ScoreDao extends AbstractDao<User_Score, Long> {
             stmt.bindLong(1, id);
         }
  
-        java.util.Date time = entity.getTime();
+        Long time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(2, time.getTime());
+            stmt.bindLong(2, time);
         }
         stmt.bindDouble(3, entity.getScore());
     }
@@ -81,9 +81,9 @@ public class User_ScoreDao extends AbstractDao<User_Score, Long> {
             stmt.bindLong(1, id);
         }
  
-        java.util.Date time = entity.getTime();
+        Long time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(2, time.getTime());
+            stmt.bindLong(2, time);
         }
         stmt.bindDouble(3, entity.getScore());
     }
@@ -97,7 +97,7 @@ public class User_ScoreDao extends AbstractDao<User_Score, Long> {
     public User_Score readEntity(Cursor cursor, int offset) {
         User_Score entity = new User_Score( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)), // time
+            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // time
             cursor.getDouble(offset + 2) // score
         );
         return entity;
@@ -106,7 +106,7 @@ public class User_ScoreDao extends AbstractDao<User_Score, Long> {
     @Override
     public void readEntity(Cursor cursor, User_Score entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setTime(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
+        entity.setTime(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setScore(cursor.getDouble(offset + 2));
      }
     

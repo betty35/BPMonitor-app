@@ -11,4 +11,8 @@ public class ConsUtils
     public static final String ALARM_VOLUME="alarmvolume";//当前选择的城市
 
 
+
+    public static final int NEW_ALARM=9876;
+    public static final int NOTIFICATION_PERMISSION_REQUEST=9876;
+
 }

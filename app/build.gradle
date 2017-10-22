@@ -28,8 +28,9 @@ dependencies {
     })
 
     //noinspection GradleCompatible
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support:design:26.1.0'
+    //noinspection GradleCompatible
+    compile 'com.android.support:appcompat-v7:26.0.1'
+    compile 'com.android.support:design:26.0.1'
     compile 'com.android.support:support-vector-drawable:26.1.0'
     compile 'com.android.support:support-v4:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -38,11 +39,23 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.facebook.android:account-kit-sdk:4.+'
     compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.lzy.net:okgo:3.0.4'
+    compile 'com.zhy:base-rvadapter:3.0.3'
     testCompile 'junit:junit:4.12'
 }
 
 greendao {
-    schemaVersion 4
+    schemaVersion 7
     daoPackage 'bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.db'
     targetGenDir 'src/main/java'
+}
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '26.0.0'
+            }
+        }
+    }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <ImageView
+        android:id="@+id/challenge_img"
+        android:layout_width="@dimen/challenge_img"
+        android:layout_height="@dimen/challenge_img"
+        android:layout_margin="@dimen/margin_s"
+        />
+
+    <TextView
+        android:id="@+id/challeng_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/challenge_img"
+        android:layout_marginLeft="@dimen/margin_s"
+        android:layout_marginRight="@dimen/margin_s"
+        android:layout_marginTop="@dimen/margin_m"
+        android:layout_toEndOf="@+id/challenge_img"
+        android:textSize="18sp" />
+</RelativeLayout>

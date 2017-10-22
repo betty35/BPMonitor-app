@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#85ecd3</color>
-    <color name="colorPrimaryDark">#80cbc4</color>
-    <color name="colorAccent">#1a237e</color>
-    <color name="color_sys">#00acc1</color>
-    <color name="color_dia">#80cbc4</color>
-    <color name="color_pulse">#a5d6a7</color>
+    <color name="colorPrimary">#80cbc4</color>
+    <color name="colorPrimaryDark">#26a69a</color>
+    <color name="colorAccent">#006064</color>
+    <color name="color_sys">#009688</color>
+    <color name="color_dia">#37474f</color>
+    <color name="color_pulse">#7cb342</color>
+    <color name="light_black">#616161</color>
+    <color name="light_purple_blue">#7986cb</color>
 </resources>

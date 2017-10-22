@@ -33,6 +33,10 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Area = new Property(6, String.class, "area", false, "AREA");
         public final static Property Memo = new Property(7, String.class, "memo", false, "MEMO");
         public final static Property Auth = new Property(8, String.class, "auth", false, "AUTH");
+        public final static Property Starttime = new Property(9, Long.class, "starttime", false, "STARTTIME");
+        public final static Property Endtime = new Property(10, Long.class, "endtime", false, "ENDTIME");
+        public final static Property Psd = new Property(11, String.class, "psd", false, "PSD");
+        public final static Property Lastupdate = new Property(12, Long.class, "lastupdate", false, "LASTUPDATE");
     }
 
 
@@ -48,7 +52,7 @@ public class UserDao extends AbstractDao<User, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"EMAIL\" TEXT," + // 1: email
                 "\"PHONE\" TEXT," + // 2: phone
                 "\"NICKNAME\" TEXT," + // 3: nickname
@@ -56,7 +60,11 @@ public class UserDao extends AbstractDao<User, Long> {
                 "\"GENDER\" INTEGER NOT NULL ," + // 5: gender
                 "\"AREA\" TEXT," + // 6: area
                 "\"MEMO\" TEXT," + // 7: memo
-                "\"AUTH\" TEXT);"); // 8: auth
+                "\"AUTH\" TEXT," + // 8: auth
+                "\"STARTTIME\" INTEGER," + // 9: starttime
+                "\"ENDTIME\" INTEGER," + // 10: endtime
+                "\"PSD\" TEXT," + // 11: psd
+                "\"LASTUPDATE\" INTEGER);"); // 12: lastupdate
     }
 
     /** Drops the underlying database table. */
@@ -105,6 +113,26 @@ public class UserDao extends AbstractDao<User, Long> {
         if (auth != null) {
             stmt.bindString(9, auth);
         }
+ 
+        Long starttime = entity.getStarttime();
+        if (starttime != null) {
+            stmt.bindLong(10, starttime);
+        }
+ 
+        Long endtime = entity.getEndtime();
+        if (endtime != null) {
+            stmt.bindLong(11, endtime);
+        }
+ 
+        String psd = entity.getPsd();
+        if (psd != null) {
+            stmt.bindString(12, psd);
+        }
+ 
+        Long lastupdate = entity.getLastupdate();
+        if (lastupdate != null) {
+            stmt.bindLong(13, lastupdate);
+        }
     }
 
     @Override
@@ -147,6 +175,26 @@ public class UserDao extends AbstractDao<User, Long> {
         if (auth != null) {
             stmt.bindString(9, auth);
         }
+ 
+        Long starttime = entity.getStarttime();
+        if (starttime != null) {
+            stmt.bindLong(10, starttime);
+        }
+ 
+        Long endtime = entity.getEndtime();
+        if (endtime != null) {
+            stmt.bindLong(11, endtime);
+        }
+ 
+        String psd = entity.getPsd();
+        if (psd != null) {
+            stmt.bindString(12, psd);
+        }
+ 
+        Long lastupdate = entity.getLastupdate();
+        if (lastupdate != null) {
+            stmt.bindLong(13, lastupdate);
+        }
     }
 
     @Override
@@ -165,7 +213,11 @@ public class UserDao extends AbstractDao<User, Long> {
             cursor.getShort(offset + 5), // gender
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // area
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // memo
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // auth
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // auth
+            cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9), // starttime
+            cursor.isNull(offset + 10) ? null : cursor.getLong(offset + 10), // endtime
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // psd
+            cursor.isNull(offset + 12) ? null : cursor.getLong(offset + 12) // lastupdate
         );
         return entity;
     }
@@ -181,6 +233,10 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setArea(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setMemo(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setAuth(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setStarttime(cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9));
+        entity.setEndtime(cursor.isNull(offset + 10) ? null : cursor.getLong(offset + 10));
+        entity.setPsd(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setLastupdate(cursor.isNull(offset + 12) ? null : cursor.getLong(offset + 12));
      }
     
     @Override

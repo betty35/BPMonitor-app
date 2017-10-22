@@ -6,8 +6,6 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Property;
 
-import java.util.Date;
-
 /**
  * Created by Bingiqng ZHAO on 2017/10/7.
  */
@@ -17,9 +15,9 @@ public class Record
 {
     @Id(autoincrement = true) private Long id;
     @Property long challenge_id;
-    @Index(unique = true) private Date finishTime;
-    @Generated(hash = 964109379)
-    public Record(Long id, long challenge_id, Date finishTime) {
+    @Index(unique = true) private Long finishTime;
+    @Generated(hash = 741182494)
+    public Record(Long id, long challenge_id, Long finishTime) {
         this.id = id;
         this.challenge_id = challenge_id;
         this.finishTime = finishTime;
@@ -39,10 +37,10 @@ public class Record
     public void setChallenge_id(long challenge_id) {
         this.challenge_id = challenge_id;
     }
-    public Date getFinishTime() {
+    public Long getFinishTime() {
         return this.finishTime;
     }
-    public void setFinishTime(Date finishTime) {
+    public void setFinishTime(Long finishTime) {
         this.finishTime = finishTime;
     }
 

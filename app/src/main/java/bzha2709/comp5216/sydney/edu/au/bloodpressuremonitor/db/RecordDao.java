@@ -26,7 +26,7 @@ public class RecordDao extends AbstractDao<Record, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Challenge_id = new Property(1, long.class, "challenge_id", false, "CHALLENGE_ID");
-        public final static Property FinishTime = new Property(2, java.util.Date.class, "finishTime", false, "FINISH_TIME");
+        public final static Property FinishTime = new Property(2, Long.class, "finishTime", false, "FINISH_TIME");
     }
 
 
@@ -66,9 +66,9 @@ public class RecordDao extends AbstractDao<Record, Long> {
         }
         stmt.bindLong(2, entity.getChallenge_id());
  
-        java.util.Date finishTime = entity.getFinishTime();
+        Long finishTime = entity.getFinishTime();
         if (finishTime != null) {
-            stmt.bindLong(3, finishTime.getTime());
+            stmt.bindLong(3, finishTime);
         }
     }
 
@@ -82,9 +82,9 @@ public class RecordDao extends AbstractDao<Record, Long> {
         }
         stmt.bindLong(2, entity.getChallenge_id());
  
-        java.util.Date finishTime = entity.getFinishTime();
+        Long finishTime = entity.getFinishTime();
         if (finishTime != null) {
-            stmt.bindLong(3, finishTime.getTime());
+            stmt.bindLong(3, finishTime);
         }
     }
 
@@ -98,7 +98,7 @@ public class RecordDao extends AbstractDao<Record, Long> {
         Record entity = new Record( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getLong(offset + 1), // challenge_id
-            cursor.isNull(offset + 2) ? null : new java.util.Date(cursor.getLong(offset + 2)) // finishTime
+            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2) // finishTime
         );
         return entity;
     }
@@ -107,7 +107,7 @@ public class RecordDao extends AbstractDao<Record, Long> {
     public void readEntity(Cursor cursor, Record entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setChallenge_id(cursor.getLong(offset + 1));
-        entity.setFinishTime(cursor.isNull(offset + 2) ? null : new java.util.Date(cursor.getLong(offset + 2)));
+        entity.setFinishTime(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
      }
     
     @Override

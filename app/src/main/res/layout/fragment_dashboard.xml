@@ -12,7 +12,7 @@
         android:layout_margin="@dimen/activity_horizontal_margin"/>
 
     <com.github.mikephil.charting.charts.PieChart
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/dashboard_piechart"
         android:layout_below="@id/dashboard_linechart"
@@ -27,12 +27,26 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:background="@android:color/holo_green_light"
-        android:text="Add Record"
+        android:background="@color/colorPrimaryDark"
+        android:text="Add Record "
         android:textColor="@android:color/background_light"
         android:textStyle="bold"
-        android:drawableLeft="@drawable/ic_add"
+        android:drawableStart="@drawable/ic_add"
         />
+    <Button
+        android:id="@+id/set_alarm_button"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:text="Set Alarm "
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"
+        android:drawableStart="@drawable/ic_set_alarm"
+        android:layout_alignBaseline="@+id/addRec_button_add"
+        android:layout_alignBottom="@+id/addRec_button_add"
+        android:layout_alignEnd="@+id/dashboard_linechart"
+        android:layout_marginEnd="38dp" />
 
 
 </RelativeLayout>

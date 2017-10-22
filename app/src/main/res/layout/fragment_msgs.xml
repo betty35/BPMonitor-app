@@ -1,13 +1,61 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.Msgs">
+    tools:context="bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.History">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:id="@+id/his_list_from_l"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_s"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/from_label" />
+
+    <TextView
+        android:id="@+id/his_list_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/his_list_from_l"
+        android:layout_toEndOf="@id/his_list_from_l"
+        android:text="01-01-2017" />
+
+    <Button
+        android:id="@+id/his_list_search"
+        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/his_list_from_l"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/margin_s"
+        android:layout_marginStart="@dimen/margin_s"
+        android:text="@string/button_search" />
+    <TextView
+        android:id="@+id/his_list_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/his_list_search"
+        android:layout_alignBaseline="@id/his_list_from_l"
+        android:layout_marginStart="@dimen/margin_s"
+        android:text="31-12-2017" />
+    <TextView
+        android:id="@+id/his_list_to_l"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/his_list_to"
+        android:layout_toStartOf="@id/his_list_to"
+        android:text="@string/to_label" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/his_list_recycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Message" />
+        android:scrollbars="vertical"
+        android:layout_alignLeft="@+id/his_list_from_l"
+        android:layout_below="@+id/his_list_search" />
 
-</FrameLayout>
+
+</RelativeLayout>

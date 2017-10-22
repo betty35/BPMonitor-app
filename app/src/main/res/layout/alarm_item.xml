@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    >
+    <LinearLayout
+        android:id="@+id/alarm_setting_item_buttons"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="5dp"
+        >
+        <Button
+            android:clickable="false"
+            android:focusable="false"
+            android:id="@+id/alarm_setting_item_del"
+            android:background="@android:color/holo_blue_light"
+            android:text="@string/button_delete"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <Button
+            android:clickable="false"
+            android:focusable="false"
+            android:id="@+id/alarm_setting_item_edit"
+            android:background="@android:color/darker_gray"
+            android:text="@string/button_edit"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:background="@android:color/black"
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:background="@android:color/white"
+        android:id="@+id/alarm_setting_item_panel"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/alarm_item_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_m"
+            android:text="BP"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        <TextView
+            android:textColor="@android:color/black"
+            android:id="@+id/alarm_item_time"
+            android:text="06:30"
+            android:textSize="30sp"
+            android:layout_toEndOf="@id/alarm_item_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@android:color/darker_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/alarm_item_memo"
+            android:layout_alignStart="@id/alarm_item_time"
+            android:text=""
+            android:textSize="16sp"
+            android:layout_below="@id/alarm_item_time"
+             />
+        <Switch
+            android:id="@+id/alarm_item_switch"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/margin_ml"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>
