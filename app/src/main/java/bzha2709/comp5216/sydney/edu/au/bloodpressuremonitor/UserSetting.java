@@ -33,6 +33,7 @@ import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.bean.User;
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.db.DaoMaster;
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.db.DaoSession;
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.db.UserDao;
+import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.tools.DateUtil;
 import bzha2709.comp5216.sydney.edu.au.bloodpressuremonitor.tools.PrefUtils;
 
 public class UserSetting extends AppCompatActivity {
@@ -120,8 +121,14 @@ public class UserSetting extends AppCompatActivity {
             String b=""+user.getYear_of_birth();
             birth.setText(b);
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-            Date startT=new Date(user.getStarttime());
-            Date endT=new Date(user.getEndtime());
+            Date startT;
+            if(user.getStarttime()!=null)
+            startT=new Date(user.getStarttime());
+            else startT= DateUtil.getBeginningOfThisWeek();
+            Date endT;
+            if(user.getEndtime()!=null)
+            endT=new Date(user.getEndtime());
+            else endT=DateUtil.getEndOfThisWeek();
             start_t.setText(sdf.format(startT));
             end_t.setText(sdf.format(endT));
             location.setText(user.getArea()==null?"":user.getArea());

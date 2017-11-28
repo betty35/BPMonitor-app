@@ -81,7 +81,7 @@ public class AlarmListAdapter extends ArrayAdapter<AlarmL> {
         else holder=(ViewHolder) view.getTag();
 
         holder.memo.setText(a.getMsg());
-        holder.time.setText((a.getTime_h()>10?"":"0")+a.getTime_h()+":"+(a.getTime_m()>10?"":"0")+a.getTime_m());
+        holder.time.setText((a.getTime_h()<10?"0":"")+a.getTime_h()+":"+(a.getTime_m()<10?"0":"")+a.getTime_m());
         holder.turn.setChecked(a.getIs_on());
         holder.alarm_type.setText(a.getType().equals("med")?"MED ":"BP  ");
         return view;
